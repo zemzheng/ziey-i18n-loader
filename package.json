@@ -1,0 +1,26 @@
+{
+  "name": "ziey-i18n-loader",
+  "version": "0.5.0",
+  "description": "Loader for i18n in webpack",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zemzheng/ziey-i18n-loader.git"
+  },
+  "keywords": [
+    "webpack",
+    "i18n"
+  ],
+  "author": "Zem Zheng (zemzheng@gmail.com)",
+  "license": "GPL",
+  "bugs": {
+    "url": "https://github.com/zemzheng/ziey-i18n-loader/issues"
+  },
+  "homepage": "https://github.com/zemzheng/ziey-i18n-loader",
+  "dependencies": {
+    "ziey-gettext": "^0.5.0"
+  }
+}
