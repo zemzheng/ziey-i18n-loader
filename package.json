@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/zemzheng/ziey-i18n-loader",
   "dependencies": {
+    "mocha": "^2.2.5",
     "should": "^7.0.2",
     "ziey-gettext": "^0.6.2"
   },
