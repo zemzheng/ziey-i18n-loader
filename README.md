@@ -1,5 +1,7 @@
 # ziey-i18n-loader
 
+[![Build Status](https://travis-ci.org/zemzheng/ziey-i18n-loader.svg)](https://travis-ci.org/zemzheng/ziey-i18n-loader)
+
 webpack i18n loader
 
 ## Install

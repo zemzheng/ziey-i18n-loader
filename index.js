@@ -44,7 +44,7 @@ module.exports = function(content) {
             .replace( /(^\s*|\s*$)/g, '' )
             .replace( /^=\s*\_\(\s*\\{0,1}['"](.+?)\\{0,1}['"]\s*\)/g, '$1' )
         if( !( str_inner in dict ) ) dict[ str_inner ] = '';
-        var result = gettext._( str_inner );
+        var result = gettext._( str_inner ).replace( /(["'])/g, '\\$1' );
         gettext.updateCurrentDict( str_inner, { reference : reference } );
         return result;
     } );

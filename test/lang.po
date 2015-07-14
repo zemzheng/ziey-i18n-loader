@@ -1,0 +1,14 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "现网更新"
+msgstr "Release online"
+
+msgid "点击查看更多"
+msgstr "Click to see \"More\""
+
+msgid "他是我们的编辑人员"
+msgstr "He's our editor"

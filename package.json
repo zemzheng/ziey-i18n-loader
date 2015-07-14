@@ -1,6 +1,6 @@
 {
   "name": "ziey-i18n-loader",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "description": "Loader for i18n in webpack",
   "main": "index.js",
   "scripts": {
@@ -24,7 +24,8 @@
   },
   "homepage": "https://github.com/zemzheng/ziey-i18n-loader",
   "dependencies": {
-    "ziey-gettext": "^0.5.0"
+    "should": "^7.0.2",
+    "ziey-gettext": "^0.6.2"
   },
   "readme": "# ziey-i18n-loader\n\nwebpack i18n loader\n\n## Install\n\n    npm install ziey-i18n-loader\n\n## Usage\n\n    # config in webpack\n    {\n        test   : /\\.(js|html)$/i, \n        loader : \"ziey-i18n\",\n        options : {\n            openTag  : '{#',\n            closeTag : '#}',\n            lang     : \"en_US\",     // lang\n            path     : './en_US.po' // po file path 会根据该路径更新\n        }\n    }\n\n    # Save to po file\n    webpack({ /* ... config ... */ });\n    // ... done 完成后\n    require( 'ziey-i18n-loader' ).save() // save to the path above\n",
   "readmeFilename": "README.md",
