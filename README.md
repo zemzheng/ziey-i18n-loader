@@ -13,13 +13,7 @@ webpack i18n loader
     # config in webpack
     {
         test   : /\.(js|html)$/i, 
-        loader : "ziey-i18n",
-        options : {
-            openTag  : '{#',
-            closeTag : '#}',
-            lang     : "en_US",     // lang
-            path     : './en_US.po' // po file path 会根据该路径更新
-        }
+        loader : "ziey-i18n?lang=<lang>&path=<path_to_po>",
     }
 
     # Save to po file

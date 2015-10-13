@@ -6,38 +6,56 @@
 var fs = require( 'fs' ),
     path = require( 'path' ),
     gettext = require( 'ziey-gettext' );
+var loaderUtils = require("loader-utils");
 
-var gettext_recored = {};
+var gettext_recored = { path : {}, lang : {} };
 
 module.exports = function(content) {
-    //
-    // {
-    //     test   : /\.(js|html)$/i, 
-    //     loader : "ziey-i18n",
-    //     include : new RegExp( 'app' + '\\' + path.sep + 'scripts' ),
-    //     options : {
-    //         openTag  : '{#',
-    //         closeTag : '#}',
-    //         lang     : lang,
-    //         path     : path.join( __dirname, lang_root, lang + '.po' ),
-    //         clean_po : 1
-    //     }
-    // },
-    var opts = this.options.module.loaders[ this.loaderIndex ].options || {};
 
-    if( !gettext_recored[ opts.path ] ){
-        gettext_recored[ opts.path ] = opts.lang;
-        gettext.handlePo( opts.lang, opts.path );
+    this.cacheable && this.cacheable();
+
+    var query = loaderUtils.parseQuery(this.query);
+    query.lang = query.lang || 'lang';
+    
+    if( !gettext_recored[ query.path ] ){
+        if( query.path && fs.existsSync( query.path ) ){
+            switch( true ){
+                case !gettext_recored.lang[ query.lang ]:
+                    // 完全没有记录
+                    gettext_recored.path[ query.path ] = query.lang;
+                    gettext_recored.lang[ query.lang ] = query.path;
+                    gettext.handlePo( query.lang, query.path );
+                    break;
+
+                case gettext_recored.path[ query.path ] == query.lang
+                        && gettext_recored.lang[ query.lang ] == query.path:
+                    // 与之前记录重合
+                    break;
+
+                default:
+                    console.error({
+                        input : query,
+                        but   : {
+                            lang : gettext_recored.path[ query.path ],
+                            path : gettext_recored.lang[ query.lang ]
+                        }
+                    })
+                    throw new Error( 'have re-name po path + lang' );
+            }
+
+        } else {
+            gettext.handlePoTxt( query.lang, '' );
+        }
     }
 
-    gettext.setLang( opts.lang );
+    gettext.setLang( query.lang );
 
-    var reg = new RegExp( opts.openTag + '(.+?)' + opts.closeTag, 'g' ),
-        dict = gettext.getDictByLang( opts.lang );
+    var reg = /{#(.+?)#}/g,
+        dict = gettext.getDictByLang( query.lang );
 
     var reference = path.relative(
-            path.dirname( opts.path ),
-            this.request.replace( /^.*\!/, '' )
+            path.dirname( query.path ),
+            this.resourcePath
         );
     return content.replace( reg, function( str , str_inner ){
         str_inner = str_inner
@@ -50,14 +68,21 @@ module.exports = function(content) {
     } );
 };
 
-module.exports.save = function(){
-    var p, lang;
-    for( p in gettext_recored ){
-        lang = gettext_recored[ p ];
-        fs.writeFileSync(
-            p,
-            gettext.obj2po( gettext.getDictByLang( lang ) )
-        );
-    }
-}
 
+module.exports.output = function( format_po ){
+    format_po = format_po == 'po' ? true : false;
+    var p, lang, obj, result = { path : {}, lang : {} };
+    for( lang in gettext_recored.lang ){
+        p = gettext_recored.lang[ lang ];
+        obj = gettext.getDictByLang( lang );
+        result.path[ p ] = result.lang[ lang ] = format_po ? gettext.obj2po( obj ) : obj;
+    }
+    return result;
+};
+module.exports.save = function(){
+    var files = module.exports.output( 'po' ).path;
+    var f;
+    for( f in files ){
+        fs.writeFileSync( f, files[ f ] );
+    }
+};
