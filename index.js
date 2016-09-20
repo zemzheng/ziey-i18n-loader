@@ -25,6 +25,13 @@ module.exports = function(content) {
                     gettext_recored.path[ query.path ] = query.lang;
                     gettext_recored.lang[ query.lang ] = query.path;
                     gettext.handlePo( query.lang, query.path );
+
+                    // 添加依赖
+                    this.addDependency( query.path );
+
+                    // 清理原有的来源列表
+                    gettext.setLang( query.lang );
+                    gettext.cleanCurrentDictReference();
                     break;
 
                 case gettext_recored.path[ query.path ] == query.lang
@@ -60,7 +67,7 @@ module.exports = function(content) {
     return content.replace( reg, function( str , str_inner ){
         str_inner = str_inner
             .replace( /(^\s*|\s*$)/g, '' )
-            .replace( /^=\s*\_\(\s*\\{0,1}['"](.+?)\\{0,1}['"]\s*\)/g, '$1' )
+            // .replace( /^=\s*\_\(\s*\\{0,1}['"](.+?)\\{0,1}['"]\s*\)/g, '$1' )
         if( !( str_inner in dict ) ) dict[ str_inner ] = '';
         var result = gettext._( str_inner ).replace( /(["'])/g, '\\$1' );
         gettext.updateCurrentDict( str_inner, { reference : reference } );

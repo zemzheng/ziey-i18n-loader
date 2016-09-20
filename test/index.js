@@ -15,6 +15,7 @@ function getQuery( lang ){
 
 function run(resourcePath, query, content) {
 	var context = {
+            addDependency : function(){},
             resourcePath: resourcePath,
             query: "?" + query,
         };
