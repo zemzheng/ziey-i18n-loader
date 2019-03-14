@@ -8,7 +8,7 @@ var runLoader = function( content ){
     return myLoader.call( context, content );
 }
 
-function getQuery( lang, others = {} ){
+function getQuery( lang, others){
     const _path = /^lang/.test( lang ) ? path.join( __dirname, 'lang.po' ) : '';
     const options = { ...others, lang, path: _path };
     return qs.stringify(options);
