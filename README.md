@@ -34,3 +34,10 @@ clean    | need to clean useless msgid & result ? default = 1
 openTag  | default = '{#'
 closeTag | default = '#}'
 
+## JSON encode
+
+```
+    '{# "hello" #}' ==> "hello"
+    '{# JSON# "hello" #}' ==> \"hello\"
+    '{# json# "hello" #}' ==> \"hello\"
+```
