@@ -10,13 +10,27 @@ webpack i18n loader
 
 ## Usage
 
+```
     # config in webpack
     {
         test   : /\.(js|html)$/i, 
-        loader : "ziey-i18n?lang=<lang>&path=<path_to_po>",
+        loader : "ziey-i18n?lang=<lang>&path=<path_to_po>&clean=0&openTag=<<&closeTag=}}",
     }
+
 
     # Save to po file
     webpack({ /* ... config ... */ });
     // ... done 完成后
     require( 'ziey-i18n-loader' ).save() // save to the path above
+```
+
+## params 
+
+param    | desc
+---      | ---
+lang     | language
+path     | path to po file
+clean    | need to clean useless msgid & result ? default = 1
+openTag  | default = '{#'
+closeTag | default = '#}'
+

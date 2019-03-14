@@ -12,3 +12,6 @@ msgstr "Click to see \"More\""
 
 msgid "他是我们的编辑人员"
 msgstr "He's our editor"
+
+msgid "这句必须被删除"
+msgstr "DELETE"
