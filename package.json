@@ -1,6 +1,6 @@
 {
   "name": "ziey-i18n-loader",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Loader for i18n in webpack",
   "main": "index.js",
   "scripts": {
